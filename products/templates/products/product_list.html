@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 300px;
+            margin-right: 10px;
+        }
+        input[type="submit"] {
+            padding: 8px 16px;
+            background-color: #555;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .product {
+            background: white;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        .product h3 {
+            color: #555;
+        }
+        .product p {
+            line-height: 1.5;
+            color: #666;
+        }
+        .product-price {
+            color: #e84118;
+            font-weight: bold;
+        }
+        .product-category {
+            color: #0097e6;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with search form -->
+    <header>
+        <h1>Available Products</h1>
+        <!-- Search form -->
+        <form action="{% url 'product_search' %}" method="get">
+            <!-- Search input -->
+            <input type="text" name="q" placeholder="Search products..." value="{{ request.GET.q }}">
+            <!-- Search button -->
+            <input type="submit" value="Search">
+        </form>
+    </header>
+    <!-- Product container -->
+    <div class="container">
+        <!-- Loop through products and display each one -->
+        {% for product in products %}
+        <div class="product">
+            <h3>{{ product.name }}</h3>
+            <!-- Display product price -->
+            <p class="product-price">${{ product.price }}</p>
+            <!-- Display product description -->
+            <p>{{ product.description }}</p>
+            <!-- Display product category -->
+            <p class="product-category">Category: {{ product.category.name }}</p>
+        </div>
+        <!-- Message when no products are available -->
+        {% empty %}
+        <p>No products available.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
